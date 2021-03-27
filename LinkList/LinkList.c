@@ -2,9 +2,9 @@
 #include "malloc.h"
 
 /*传入一个链表，获取第n个元素,并将元素传入e中*/
-int GetItem(LinkList *L, int i, ElemType* e)
+int GetItem(LinkedList *L, int i, ElemType* e)
 {
-    LinkList p;
+    LinkedList p;
     p = (*L)->next;//使P指向L的第一个结点
     int j = 1;
     while (p && j < i)
@@ -15,13 +15,13 @@ int GetItem(LinkList *L, int i, ElemType* e)
     if (!p || j > i)//p为空或者i<0时返回ERROR
         return ERROR;
     *e = p->data;
-    return OK;
+    return SUCCESS;
 }
 
-int ListInsert(LinkList *L, int i,ElemType e)
+int ListInsert(LinkedList*L, int i,ElemType e)
 {
     int j = 1;
-    LinkList p,s;
+    LinkedList p,s;
     p = *L;
     while (p && j < i)
     {
@@ -31,25 +31,25 @@ int ListInsert(LinkList *L, int i,ElemType e)
     if (!p || j > i)
         return ERROR;
     //生成新结点
-    s = (LinkList)malloc(sizeof(Node));
+    s = (LinkedList)malloc(sizeof(LNode));
     s->data = e;
     s->next = p->next;
     p->next = s;
-    return OK;
+    return SUCCESS;
 }   
 
 
 
-int ListEmpty(LinkList *L)
+int ListEmpty(LinkedList*L)
 {
     if ((*L)->next == NULL)
-        return TRUE;
-    return FALSE;
+        return SUCCESS;
+    return ERROR;
 }
 
-int ClearList(LinkList *L)
+int ClearList(LinkedList*L)
 {
-    LinkList p,s;
+    LinkedList p,s;
     p = (*L)->next;
     while (p)
     {
@@ -58,12 +58,12 @@ int ClearList(LinkList *L)
         p = s;
     }
     (*L)->next = NULL;
-    return OK;
+    return SUCCESS;
 }
 
-int ListDelete(LinkList* L, int i, ElemType* e)
+int ListDelete(LinkedList* L, int i, ElemType* e)
 {
-    LinkList p, s;
+    LinkedList p, s;
     int j = 1;
     p = *L;
     while (p->next && j < i)
@@ -77,13 +77,13 @@ int ListDelete(LinkList* L, int i, ElemType* e)
     *e = s->data;
     p->next = p->next->next;
     free(s);
-    return OK;
+    return SUCCESS;
 
 }
 
-int ListLength(LinkList* L)
+int ListLength(LinkedList* L)
 {
-    LinkList p;
+    LinkedList p;
     p = (*L)->next;
     int j = 0;
     while (p)
@@ -95,9 +95,9 @@ int ListLength(LinkList* L)
 }
 
 
-int LocateElem(LinkList* L, ElemType e)
+int LocateElem(LinkedList* L, ElemType e)
 {
-    LinkList p;
+    LinkedList p;
     p = (*L);
     int j = 0;
     while (p)
@@ -111,25 +111,25 @@ int LocateElem(LinkList* L, ElemType e)
     return j;
 }
 
-void CreateList(LinkList *L,int n)
+void CreateList(LinkedList *L,int n)
 {
     srand(time(0));//初始化随机种子
     int i;
-    * L = (LinkList)malloc(sizeof(Node));
+    * L = (LinkedList)malloc(sizeof(LNode));
     (*L)->next = NULL;
-    LinkList p;
+    LinkedList p;
     for (i = 0; i < n; i++)
     {
-        p = (LinkList)malloc(sizeof(Node));
+        p = (LinkedList)malloc(sizeof(LNode));
         p->data = rand() % 100 + 1;//生成1-100的随机数;
         p->next = (*L)->next;
         (*L)->next = p;
     }
 }
 
-void Display(LinkList* L)//打印链表
+void Display(LinkedList* L)//打印链表
 {
-    LinkList p;
+    LinkedList p;
     p = (*L)->next;
     while (p)
     {
@@ -139,9 +139,9 @@ void Display(LinkList* L)//打印链表
     printf("\n");
 }
 
-LinkList InitList()
+LinkedList InitList()
 {
-    LinkList L = (LinkList)malloc(sizeof(Node));
+    LinkedList L = (LinkedList)malloc(sizeof(LNode));
     L->next = NULL;
     return L;
 }
