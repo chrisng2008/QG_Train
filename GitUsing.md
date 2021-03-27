@@ -87,7 +87,13 @@ GIthub
 git clone https://github.com/chrisng2008/QG_Train.git#远程仓库地址
 ```
 
+```shell
+git remote add origin https://github.com/chrisng2008/QG_Train.git
+```
 
+```shell
+ git push origin master
+```
 
 ### 创建与合并分支
 
@@ -141,3 +147,31 @@ git switch main#切换到原有的分支
 删除分支：`git branch -d <name>`
 
 ---
+
+### 解决冲突
+
+什么是冲突？
+
+```shell
+git switch -c feature1#创建并切换分支
+#然后修规README.md
+#在最后加Creating a new branch is quick AND simple.
+git add readme.txt#在featurel上提交
+git switch master
+#在分支master上修改
+#最后改为Creating a new branch is quick AND simple.
+git add README.md
+git merge feature1#这种情况下就不能出现快速合并
+```
+
+这样的话就会出现冲突
+
+解决冲突的方法就是手动修改成我们需要的内容在提交
+
+```shell
+git add README.md
+git commit -m "conflict fixed"
+git branch -d feature1#最后删除分支
+```
+
+用`git log --graph`命令可以看到分支合并图。
