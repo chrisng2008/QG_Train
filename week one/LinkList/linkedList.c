@@ -120,13 +120,13 @@ Status ReverseList(LinkedList *L) {
     if (r == NULL || q == NULL)/*判断是否为空表或者只有一个节点*/
         return;
     while (q) {
-        r->next = p; // 倒置结点
-        p = r;       // p指向新倒置的结点
-        r = q;       // 前进一个结点
+        r->next = p; 
+        p = r;       
+        r = q;       
         q = q->next;
     }
-    r->next = p;     // 处理最后一个结点
-    (*L)->next = r;  // head指向倒置后的链表
+    r->next = p;     
+    (*L)->next = r;  
     printf("\n");
     return SUCCESS;
 }
