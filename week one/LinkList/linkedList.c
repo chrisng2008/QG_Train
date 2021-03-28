@@ -44,7 +44,7 @@ void DestroyList(LinkedList *L) {
  *  @notice      : None
  */
 Status InsertList(LNode *p, LNode *q) {
-    if (p == NULL || q == NULL) 
+    if (p == NULL || q == NULL)
         return ERROR;
     q->next = p->next;
     p->next = q;
@@ -79,10 +79,11 @@ void TraverseList(LinkedList L, void (*visit)(ElemType e)) {
         visit(p->data);
         p = p->next;
     }
+    printf("\n");
 }
 
 void pf(ElemType e) {
-    printf("%d", e);
+    printf("%d ", e);
 }
 
 /**
@@ -117,7 +118,7 @@ Status ReverseList(LinkedList *L) {
     r = (*L)->next;
     q = r->next;
     if (r == NULL || q == NULL)/*判断是否为空表或者只有一个节点*/
-        return; 
+        return;
     while (q) {
         r->next = p; // 倒置结点
         p = r;       // p指向新倒置的结点
@@ -126,7 +127,7 @@ Status ReverseList(LinkedList *L) {
     }
     r->next = p;     // 处理最后一个结点
     (*L)->next = r;  // head指向倒置后的链表
-
+    printf("\n");
     return SUCCESS;
 }
 

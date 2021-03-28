@@ -44,7 +44,17 @@ typedef enum Status {
 	ERROR,
 	SUCCESS
 } Status;
-
+typedef enum Function {
+	DISPLAY = 1 ,
+	INSERTLIST,
+	DELETELIST,
+	TRAVERSELIST,
+	SEARCHLIST,
+	REVERSELIST,
+	ISLOOPLIST,
+	REVERSEEVENLIST,
+	FINDMIDNODE,
+} Function;
 
 /**************************************************************
 *	Prototype Declare Section

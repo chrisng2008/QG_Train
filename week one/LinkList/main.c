@@ -2,13 +2,20 @@
 #include <stdio.h>
 #include "linkedList.h"
 
-
 int main()
 {
+	LinkedList L;/*Define a new LNode*/
+	InitList(&L);/*Init a new List*/
+	int i, j, k;
+	int index;
+	printf("Enter the length of the List\n");
+	scanf("%d", &i);
+	CreateList(&L,i);/*Create a random list*/
+
 	printf("Enter the num the test the function!\n");
 	printf("         Enter 0 to leave\n");
 	printf("###################################\n");
-	printf("##     1. DisplayLis             ##\n");
+	printf("##     1. DisplayList            ##\n");
 	printf("##     2. InsertList             ##\n");
 	printf("##     3. DeleteList             ##\n");
 	printf("##     4. TraverseList           ##\n");
@@ -18,103 +25,95 @@ int main()
 	printf("##     8. ReverseEvenLis         ##\n");
 	printf("##     9. FindMidNode            ##\n");
 	printf("###################################\n");
-	LinkedList L;
-	InitList(&L);
-	CreateList(L, 5);
-	LinkedList p;
-	Display(L);
-	int i, j;
-	int n;
 	do
 	{
-		scanf("%d", &n);
-		switch (n)
+		scanf("%d", &k);
+		switch (k)
 		{
-		case 1:Display(L); break;
+		case DISPLAY:
+			Display(&L);
+			break;
 
-
-		case 2:
+		case INSERTLIST:
 		{
-			int i, index;
-			int j = 1;
-			LinkedList p = (LinkedList)malloc(sizeof(LNode));
+
+			LinkedList r = (LinkedList)malloc(sizeof(LNode));
 			printf("Enter the data of the Node you want to insert\n");
-			scanf("%d", &(p->data));
-			/*p->next = NULL;*/
+			scanf("%d", &(r->data));
 			printf("Enter the index of the Node you want to insert\n");
 			scanf("%d", &index);
-			LinkedList* r = L;
-			while (r && j < index)
-			{
-				*r = (*r)->next;
-				++j;
-			}
-			InsertList(*r, p);
-			Display(L); break;
+			LinkedList p = L;
+			for (i = 0; i < index; i++)
+				p = p->next;
+			InsertList(p, r);
+			Display(&L);
+			break;
 		}
 
 
-		case 3:
+		case DELETELIST:
 		{
-			printf("Enter the data you want to delete");
-			scanf("%d", &i);
-			p = L;
-			while (p)
-			{
-				if (p->data == i)
-					break;
-			}
-			DeleteList(L, &j);
-
+			printf("Enter the index of the LNode you want to delete\n");
+			scanf("%d", &index);
+			LinkedList p = L;
+			for (i = 1; i < index; i++)
+				p = p->next;
+			int e;
+			DeleteList(p, &e);
+			printf("The data of the LNode you delete is %d\n",e);
+			break;
 		}
 
-
-		case 4:TraverseList(&L, pf); break;
-
-
-		case 5:
+		case TRAVERSELIST:
 		{
+			printf("This Function will call a visit to traverse you list and print it!\n");
+			TraverseList(L,pf);
+			break;
+		}
+		case SEARCHLIST:
 			printf("Please enter the data you want to search!\n");
 			scanf("%d", &i);
-			printf("%d", SearchList(L, i)); break;
-
-			if (SearchList(L, i) == SUCCESS)
-				printf("The data is in the list");
+			if (SearchList(L, i))
+				printf("The data is in the list\n");
 			else
-				printf("The data is not in the list");
+				printf("The data is not in the list\n");
 			break;
-		}
 
-		case 6:if (ReverseList(L) == SUCCESS)
-			printf("ReverseList success!"); break;
-
-		case 7:
-			if (IsLoopList(L) == SUCCESS)
-				printf("This is  a LoopList");
+		case REVERSELIST:
+			if(ReverseList(&L))
+				printf("Success!\n");
 			else
-				printf("This is not a LoopList");
+				printf("False!\n");
 			break;
-		case 8:
-		{
-			p = ReverseEvenList(L);
-			while (p)
+		case ISLOOPLIST:
+			if(IsLoopList(L))
+				printf("This list is a LoopList\n");
+			else
+				printf("This list is not a LoopList\n");
+			break;
+
+		case REVERSEEVENLIST:
 			{
-				printf("%d  ", p->data);
-				p = p->next;
+				LinkedList p = ReverseEvenList(&L);
+				while(p)
+				{
+					printf("%d  ",p->data);
+					p=p->next;
+				}
+				break;
 			}
-			break;
-		}
 
 
-		case 9:
-		{
-			p = FindMidNode(L);
-			printf("%d", p->data);
-			break;
-		}
+		case FINDMIDNODE:
+			{
+				LinkedList p;
+				p=FindMidNode(&L);
+				printf("The data of the middle Node is %d\n",p->data);
+				break;
+			}
 
 		}
-			
-	} while (n != 0);
+	} while (k != 0);
 	return 0;
+	system ("pause");
 }
