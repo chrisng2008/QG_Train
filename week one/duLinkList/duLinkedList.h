@@ -1,5 +1,3 @@
-#include<stdio.h>
-
 /***************************************************************************************
  *	File Name				:	duLinkedList.h
  *	CopyRight				:	2020 QG Studio
@@ -36,8 +34,8 @@ typedef int ElemType;
 // define struct of linked list
 typedef struct DuLNode {
 	ElemType data;
-  	struct DuLNode *prior,  *next;
-} DuLNode, *DuLinkedList;
+	struct DuLNode* prior, * next;
+} DuLNode, * DuLinkedList;
 
 // define status
 typedef enum Status {
@@ -45,6 +43,14 @@ typedef enum Status {
 	SUCCESS,
 } Status;
 
+typedef enum Function {
+	DISPLAY_DUL = 1,
+	INSERTBEFORE_DuL,
+	INSERTAFTER_DuL,
+	DELETELIST_DuL,
+	DESTORY_DuL,
+	TRAVERSELIST_Dul,
+}Function;
 
 /**************************************************************
 *	Prototype Declare Section
@@ -57,7 +63,7 @@ typedef enum Status {
  *	@return		 : Status
  *  @notice      : None
  */
-Status InitList_DuL(DuLinkedList *L);
+Status InitList_DuL(DuLinkedList* L);
 
 /**
  *  @name        : void DestroyList_DuL(DuLinkedList *L)
@@ -66,9 +72,7 @@ Status InitList_DuL(DuLinkedList *L);
  *	@return		 : status
  *  @notice      : None
  */
-void DestroyList_DuL(DuLinkedList *L);
-
-void Display(DuLinkedList* L);
+void DestroyList_DuL(DuLinkedList* L);
 
 /**
  *  @name        : Status InsertBeforeList_DuL(DuLNode *p, LNode *q)
@@ -77,7 +81,7 @@ void Display(DuLinkedList* L);
  *	@return		 : status
  *  @notice      : None
  */
-Status InsertBeforeList_DuL(DuLNode *p, DuLNode *q);
+Status InsertBeforeList_DuL(DuLNode* p, DuLNode* q);
 
 /**
  *  @name        : Status InsertAfterList_DuL(DuLNode *p, DuLNode *q)
@@ -86,7 +90,7 @@ Status InsertBeforeList_DuL(DuLNode *p, DuLNode *q);
  *	@return		 : status
  *  @notice      : None
  */
-Status InsertAfterList_DuL(DuLNode *p, DuLNode *q);
+Status InsertAfterList_DuL(DuLNode* p, DuLNode* q);
 
 /**
  *  @name        : Status DeleteList_DuL(DuLNode *p, ElemType *e)
@@ -95,7 +99,7 @@ Status InsertAfterList_DuL(DuLNode *p, DuLNode *q);
  *	@return		 : status
  *  @notice      : None
  */
-Status DeleteList_DuL(DuLNode *p, ElemType *e);
+Status DeleteList_DuL(DuLNode* p, ElemType* e);
 
 /**
  *  @name        : void TraverseList_DuL(DuLinkedList L, void (*visit)(ElemType e))
@@ -105,9 +109,10 @@ Status DeleteList_DuL(DuLNode *p, ElemType *e);
  *  @notice      : None
  */
 void TraverseList_DuL(DuLinkedList L, void (*visit)(ElemType e));
- /**************************************************************
+void Display(DuLinkedList* L);//¥Ú”°¡¥±Ì
+void CreateList(DuLinkedList* L);
+void pf(ElemType e);
+/**************************************************************
 *	End-Multi-Include-Prevent Section
 **************************************************************/
-
-
 #endif

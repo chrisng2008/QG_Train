@@ -11,6 +11,7 @@ Status InitList_DuL(DuLinkedList *L) {
     *L = (DuLinkedList)malloc(sizeof(DuLNode));
 	(*L)->next = NULL;
 	(*L)->prior = NULL;
+    (*L)->data = NULL;
 	return SUCCESS;
 }
 
@@ -22,15 +23,15 @@ Status InitList_DuL(DuLinkedList *L) {
  *  @notice      : None
  */
 void DestroyList_DuL(DuLinkedList *L) {
-	DuLinkedList p,r;
-    p = (*L)->next;
-    while (p)
+    DuLinkedList p;
+    while (*L) 
     {
-        r = p->next;
-        p = p->next->next;
-        free(r);
+        p = (*L)->next;
+        free(*L);
+        *L = p;
+        if (p)
+            p->prior = NULL;
     }
-    (*L)->next = NULL;
     return SUCCESS;
 	
 }
@@ -43,9 +44,13 @@ void DestroyList_DuL(DuLinkedList *L) {
  *  @notice      : None
  */
 Status InsertBeforeList_DuL(DuLNode *p, DuLNode *q) {
-    q->prior = p->prior;
+    if (!p)
+        return ERROR;
+    if (p->prior) {
+        p->prior->next = q;
+        q->prior = p->prior;
+    }
     q->next = p;
-    p->prior->next = q;
     p->prior = q;
     return SUCCESS;
 }
@@ -58,10 +63,19 @@ Status InsertBeforeList_DuL(DuLNode *p, DuLNode *q) {
  *  @notice      : None
  */
 Status InsertAfterList_DuL(DuLNode *p, DuLNode *q) {
-    q->prior = p;
-    q->next = p->next;
-    p->next->prior = q;
-    p->next = q;
+    if (p->next == NULL&&p->prior==NULL)
+    {
+        q->prior = NULL;
+        q->next = p;
+        p->prior = q;
+    }
+    else
+    {
+        q->next = p->next;
+        q->prior = p;
+        p->next->prior = q;
+        p->next = q;
+    }
     return SUCCESS;
 }
 
@@ -89,18 +103,58 @@ Status DeleteList_DuL(DuLNode *p, ElemType *e) {
  *  @notice      : None
  */
 void TraverseList_DuL(DuLinkedList L, void (*visit)(ElemType e)) {
-
+    DuLinkedList p = L;
+        while (p) {
+            visit(p->data);
+            p = p->next;
+        }
+        printf("\n");
+    
+}
+void pf(ElemType e) {
+    printf("%d  ", e);
 }
 
-void Display(DuLinkedList* L)//打印链表
+//void CreateDuLList(DuLinkedList* L)
+//{
+//    int i;
+//    srand(time(0));//初始化随机种子
+//    DuLinkedList p=L;
+//    for (i = 0; i < 5; i++)
+//    {
+//        DuLinkedList r = (DuLinkedList)malloc(sizeof(DuLNode));
+//        r->data= rand() % 100 + 1;//生成1-100的随机数;
+//        InsertAfterList_DuL(p, r);
+//    }
+//}
+void Display(DuLinkedList * L)//打印链表
 {
-    DuLinkedList p;
-    p = (*L)->next;
-    while (p)
-    {
-        printf("%d  ", p->data);
+    DuLinkedList p = *L;
+    do {
+        if (p == NULL)
+        {
+            printf("The list is empty\n");
+            break;
+        }
+            
+        printf("%d ", p->data);
         p = p->next;
-    }
+    } while (p);
     printf("\n");
 }
+void CreateList(DuLinkedList *L)
+{
+     
+     srand(time(0));//初始化随机种子
+     for (int i = 0; i < 5; i++)
+     {
+         DuLinkedList r = (DuLinkedList)malloc(sizeof(DuLNode));
+         r->prior = NULL;
+         r->data= rand() % 100 + 1;//生成1-100的随机数;
+         DuLinkedList p = *L;
+         r->next = p;
+         p->prior = r;
+         *L = r;
+     }
 
+}
