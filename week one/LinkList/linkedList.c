@@ -1,6 +1,7 @@
 #include "linkedList.h"
 
 
+
 /**
  *  @name        : Status InitList(LinkList *L);
  *	@description : initialize an empty linked list with only the head node without value
@@ -8,6 +9,7 @@
  *	@return		 : Status
  *  @notice      : None
  */
+
 Status InitList(LinkedList *L) {
     *L = (LinkedList)malloc(sizeof(LNode));
     (*L)->next = NULL;
@@ -42,6 +44,8 @@ void DestroyList(LinkedList *L) {
  *  @notice      : None
  */
 Status InsertList(LNode *p, LNode *q) {
+    if (p == NULL || q == NULL) 
+        return ERROR;
     q->next = p->next;
     p->next = q;
     return SUCCESS;
@@ -70,13 +74,15 @@ Status DeleteList(LNode *p, ElemType *e) {
  *  @notice      : None
  */
 void TraverseList(LinkedList L, void (*visit)(ElemType e)) {
-    LinkedList p;
-    p = L;
-    while (p && p->next)
-    {
+   LinkedList p = L->next;
+    while (p) {
         visit(p->data);
         p = p->next;
     }
+}
+
+void pf(ElemType e) {
+    printf("%d", e);
 }
 
 /**
@@ -88,14 +94,11 @@ void TraverseList(LinkedList L, void (*visit)(ElemType e)) {
  */
 Status SearchList(LinkedList L, ElemType e) {
     LinkedList p;
-    p = L;
-    while (p->next)
+    p = L->next;
+    while(p)
     {
         if (p->data == e)
-        {
             return SUCCESS;
-            break;
-        }
         p = p->next;
     }
     return ERROR;
@@ -113,7 +116,8 @@ Status ReverseList(LinkedList *L) {
     p = NULL;
     r = (*L)->next;
     q = r->next;
-    if (r == NULL || q == NULL) return; // 空表和仅有一个结点的链表不用倒置
+    if (r == NULL || q == NULL)/*判断是否为空表或者只有一个节点*/
+        return; 
     while (q) {
         r->next = p; // 倒置结点
         p = r;       // p指向新倒置的结点
@@ -134,15 +138,21 @@ Status ReverseList(LinkedList *L) {
  *  @notice      : None
  */
 Status IsLoopList(LinkedList L) {
-    LinkedList fast, slow;
+    if (L == NULL || L->next == NULL)
+        return ERROR;
+    LinkedList fast,  slow;
     fast = L->next->next;
-    slow = L;
-    while (slow == fast)
-    {
-        fast = fast->next->next;
-        slow = slow->next;
+    slow = L->next;
+    while (1) {
+        if (!fast || !slow)
+            return ERROR;
+        if (fast == slow)
+            return SUCCESS;
+        else {
+            fast = fast->next->next;
+            slow = slow->next;
+        }
     }
-        
 }
 
 /**

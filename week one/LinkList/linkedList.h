@@ -51,7 +51,7 @@ typedef enum Status {
 **************************************************************/
 void CreateList(LinkedList* L, int n);
 void Display(LinkedList* L);
-
+void pf(ElemType e);
 /**
  *  @name        : Status InitList(LinkList *L);
  *	@description : initialize an empty linked list with only the head node without value
