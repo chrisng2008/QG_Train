@@ -1,114 +1,172 @@
 #include <stdio.h>
 #include "SqStack.h"
-#define _CRT_SECURE_NO_WARNINGS
 int main()
 {
     printf("Enter the num the test the function!\n");
-	printf("         Enter 0 to leave\n");
-	printf("###################################\n");
-	printf("##     1. åˆå§‹åŒ–é¡ºåºæ ˆ            ##\n");
-    printf("##     2. åˆ¤æ–­æ ˆæ˜¯å¦ä¸ºç©º          ##\n");
-	printf("##     3. è·å–æ ˆé¡¶å…ƒç´             ##\n");
-	printf("##     4. é”€æ¯æ ˆ                 ##\n");
-	printf("##     5. è·å–å½“å‰æ ˆçš„é•¿åº¦        ##\n");
-	printf("##     6. å…¥æ ˆæ“ä½œ               ##\n");
-	printf("##     7. å‡ºæ ˆæ“ä½œ               ##\n");
-    printf("##     8. æ¸…ç©ºå½“å‰å±å¹•           ##\n");
-	printf("###################################\n");
-/*
-	INITSTACK=1,
-	ISEMPTYSTACK,
-	GETTOPSTACK,
-	DESTROYSTACK,
-	STACKLENGTH,
-	PUSHSTACK,
-	POPSTACk,,*/
-    int i,n,size;
-    scanf_s("%d",&n);
+    printf("         Enter 0 to leave\n");
+    printf("###################################\n");
+    printf("##     1. ³õÊ¼»¯Ë³ĞòÕ»            ##\n");
+    printf("##     2. ÅĞ¶ÏÕ»ÊÇ·ñÎª¿Õ          ##\n");
+    printf("##     3. »ñÈ¡Õ»¶¥ÔªËØ            ##\n");
+    printf("##     4. Çå¿ÕË³ĞòÕ»              ##\n");
+    printf("##     5. Ïú»ÙË³ĞòÕ»              ##\n");
+    printf("##     6. »ñÈ¡Ë³ĞòÕ»µÄ³¤¶È        ##\n");
+    printf("##     7. ÈëÕ»²Ù×÷                ##\n");
+    printf("##     8. ³öÕ»²Ù×÷                ##\n");
+    printf("##     9. Çå¿ÕÆÁÄ»                ##\n");
+    printf("###################################\n");
+
+    int i, n, size, exist=0;
+    SqStack* s;
     do
-    {
+    { 
+        scanf_s("%d", &n);
         switch (n)
         {
         case 0:
             break;
         case INITSTACK:
-            printf("**********\n");
-            printf("è¯·è¾“å…¥ä½ éœ€è¦æ ˆçš„å¤§å°\n");
-            while(i=scanf_s("%d",&size)==ERROR && size>=0)
-                printf("è¯·è¾“å…¥æ­£ç¡®çš„æ•°å­—\n");
-            SqStack *s;
-            if(initStack(&s,size))
-                printf("æ ˆåˆå§‹åŒ–æˆåŠŸï¼\n\n");
+            if (exist==0)
+            {
+                printf("ÇëÊäÈëÄãĞèÒªÕ»µÄ´óĞ¡\n");
+                scanf_s("%d", &size);
+                if (initStack(&s, size))
+                    printf("Õ»³õÊ¼»¯³É¹¦£¡\n\n");
+                exist = 1;     
+            }
+            else if (exist == 1)
+            {
+                printf("¶Ô²»Æğ£¬³õÊ¼»¯Õ»Ç°ÇëÏÈÏú»ÙÕ»\n\n");
+            }
             break;
-
         case ISEMPTYSTACK:
-            if(isEmptyStack(&s))
-                printf("è¯¥æ ˆä¸ºç©ºï¼\n\n");
-            else
-                printf("è¯¥æ ˆä¸ä¸ºç©º\n\n");
+            if (exist == 1)
+            {
+                if (isEmptyStack(&s))
+                    printf("¸ÃÕ»Îª¿Õ£¡\n\n");
+                else
+                    printf("¸ÃÕ»²»Îª¿Õ\n\n");
+            }
+            else if(exist == 0)
+                printf("¶Ô²»Æğ£¬¸ÃÕ»²»´æÔÚ£¡\n\n");
             break;
         case GETTOPSTACK:
-            if(getTopStack(&s,&i)){
-                printf("è·å–æ ˆé¡¶å…ƒç´ æˆåŠŸï¼\n");
-                printf("æ ˆé¡¶å…ƒç´ ä¸º%d\n\n",i);
+            if (exist == 1)
+            {
+                if (getTopStack(&s, &i)) {
+                    printf("»ñÈ¡Õ»¶¥ÔªËØ³É¹¦£¡\n");
+                    printf("Õ»¶¥ÔªËØÎª%d\n\n", i);
+                }
+                else
+                    printf("»ñÈ¡Õ»¶¥ÔªËØÊ§°Ü£¡¸ÃÕ»Îª¿Õ£¡\n\n");
             }
-            else 
-                printf("è·å–æ ˆé¡¶å…ƒç´ å¤±è´¥ï¼\n\n");
+            else if (exist == 0)
+            {
+                printf("¶Ô²»Æğ£¬»ñÈ¡Õ»¶¥ÔªËØÊ±Çë³õÊ¼»¯Õ»!\n\n");
+            }
+            
             break;
 
-        case DESTROYSTACK:
-            if(destroyStack(&s))
-                printf("é”€æ¯æ ˆæˆåŠŸ\n\n");
+        case CLEARSTACK:
+            if (exist == 1)
+            {
+                if (clearStack(&s))
+                    printf("Çå¿ÕÕ»³É¹¦£¡\n\n");
+            }
+            else if (exist == 0)
+            {
+                printf("¶Ô²»Æğ£¬¸ÃÕ»²»´æÔÚ£¡\n\n");
+            }
+            break;
+        case DESTORYSTACK:
+            if (exist == 1)
+            {
+                if (destroyStack(&s)) {
+                    printf("Ïú»ÙÕ»³É¹¦\n\n");
+                    exist = 0;
+                }
+            }
+            else if (exist == 0)
+            {
+                printf("¶Ô²»Æğ£¬Ïú»ÙÕ»Ç°Çë³õÊ¼»¯Õ»");
+            }
+           
+                
             else
-                printf("é”€æ¯æ ˆå¤±è´¥!\n\n");
+                printf("Ïú»ÙÕ»Ê§°Ü!\n\n");
             break;
         case STACKLENGTH:
-            if(stackLength(&s,&i)){
-                printf("è·å–æ ˆé•¿åº¦æˆåŠŸ!\n");
-                printf("æ ˆçš„é•¿åº¦ä¸º%d\n\n",i);
+            if (exist == 1)
+            {
+                if (stackLength(&s, &i)) {
+                    printf("»ñÈ¡Õ»³¤¶È³É¹¦!\n");
+                    printf("Õ»µÄ³¤¶ÈÎª%d\n\n", i);
+                }
+                else
+                    printf("»ñÈ¡Õ»³¤¶ÈÊ§°Ü\n\n");
             }
-            else
-                printf("è·å–æ ˆé•¿åº¦å¤±è´¥\n\n");
+            else if (exist == 0)
+            {
+                printf("¶Ô²»Æğ£¬¸ÃÕ»²»´æÔÚ¡£»ñÈ¡Õ»³¤¶ÈÇ°Çë³õÊ¼»¯Õ»£¡\n\n");
+            }
             break;
         case PUSHSTACK:
-            if(pushStack(&s,&i))
+        {
+            if (exist == 1)
             {
-                printf("æ ˆé¡¶å…ƒç´ å‡ºæ ˆæˆåŠŸï¼\n");
-                printf("æ ˆé¡¶å…ƒç´ ä¸º%d\n\n",i);
+                ElemType data;
+                printf("ÇëÊäÈëÈëÕ»ÔªËØµÄÖµ\n");
+                scanf_s("%d", &data);
+                if (pushStack(&s, data))
+                {
+                    printf("ÈëÕ»³É¹¦£¡\n");
+                    getTopStack(&s, &data);
+                    printf("Õ»¶¥ÔªËØÎª%d\n\n", data);
+                }
+                else
+                    printf("ÈëÕ»Ê§°Ü!\n\n");
             }
-            else
-                printf("å‡ºæ ˆå¤±è´¥!\n\n");
-            break;
-        case POPSTACk:
-            if(popStack(&s,&i)){
-                printf("å‡ºæ ˆæˆåŠŸï¼\n");
-                printf("å‡ºæ ˆçš„å…ƒç´ æ˜¯%d\n\n",i);
-            }    
-            else
-                printf("å‡ºæ ˆå¤±è´¥ï¼\n\n");
-            break;
-        /*case CLEARSCREEN:
-            if(clearScreen)
-                printf("æ¸…ç©ºå±å¹•æˆåŠŸï¼\n");
-            printf("Enter the num the test the function!\n");
-	        printf("         Enter 0 to leave\n");
-        	printf("###################################\n");
-	        printf("##     1. åˆå§‹åŒ–é¡ºåºæ ˆ            ##\n");
-            printf("##     2. åˆ¤æ–­æ ˆæ˜¯å¦ä¸ºç©º          ##\n");
-	        printf("##     3. è·å–æ ˆé¡¶å…ƒç´             ##\n");
-	        printf("##     4. é”€æ¯æ ˆ                 ##\n");
-	        printf("##     5. è·å–å½“å‰æ ˆçš„é•¿åº¦        ##\n");
-	        printf("##     6. å…¥æ ˆæ“ä½œ               ##\n");
-	        printf("##     7. å‡ºæ ˆæ“ä½œ               ##\n");
-            printf("##     8. æ¸…ç©ºå½“å‰å±å¹•           ##\n");
-	        printf("###################################\n");*/
-        default:
-            printf("è¾“å…¥é”™è¯¯ï¼Œè¯·è¾“å…¥0-7ä¹‹å‰çš„æ•´æ•°\n");
+            else if (exist == 0)
+                printf("¶Ô²»Æğ£¬¸ÃÕ»²»´æÔÚ£¬ÈëÕ»Ç°³õÊ¼»¯Õ»\n\n");
             break;
         }
-    } while (n!=0);
-    
-    
+        case POPSTACK:
+            if (exist == 1)
+            {
+                if (popStack(&s, &i)) {
+                    printf("³öÕ»³É¹¦£¡\n");
+                    printf("³öÕ»µÄÔªËØÊÇ%d\n\n", i);
+                }
+                else
+                    printf("³öÕ»Ê§°Ü£¡\n\n");
+            }
+            else if (exist == 0)
+            {
+                printf("¶Ô²»Æğ£¬¸ÃÕ»²»´æÔÚ£¬³öÕ»Ç°Çë³õÊ¼»¯Õ»!\n\n");
+            }
+            break;
+            /*case CLEARSCREEN:
+                if(clearScreen)
+                printf("Çå¿ÕÆÁÄ»³É¹¦£¡\n");
+                printf("Enter the num the test the function!\n");
+                printf("         Enter 0 to leave\n");
+                printf("###################################\n");
+                printf("##     1. ³õÊ¼»¯Ë³ĞòÕ»            ##\n");
+                printf("##     2. ÅĞ¶ÏÕ»ÊÇ·ñÎª¿Õ          ##\n");
+                printf("##     3. »ñÈ¡Õ»¶¥ÔªËØ            ##\n");
+                printf("##     4. Ïú»ÙÕ»                 ##\n");
+                printf("##     5. »ñÈ¡µ±Ç°Õ»µÄ³¤¶È        ##\n");
+                printf("##     6. ÈëÕ»²Ù×÷               ##\n");
+                printf("##     7. ³öÕ»²Ù×÷               ##\n");
+                printf("##     8. Çå¿Õµ±Ç°ÆÁÄ»           ##\n");
+                printf("###################################\n");*/
+        default:
+            printf("ÊäÈë´íÎó£¬ÇëÊäÈë0-7Ö®Ç°µÄÕûÊı\n");
+            break;
+        }
+    } while (n != 0);
+
+
 
 
 

@@ -1,67 +1,67 @@
 #include "SqStack.h"
 
-Status initStack(SqStack *s,int sizes)//åˆå§‹åŒ–æ ˆ
+Status initStack(SqStack* s, int sizes)//³õÊ¼»¯Õ»
 {
-    s->elem=(ElemType*)malloc(sizeof(ElemType)*sizes);
-    s->top=0;
-    s->size=sizes;
+    s->elem = (ElemType*)malloc(sizeof(ElemType) * sizes);
+    s->top = -1;
+    s->size = sizes;
 }
-    
 
 
 
-Status isEmptyStack(SqStack *s)//åˆ¤æ–­æ ˆæ˜¯å¦ä¸ºç©º
+
+Status isEmptyStack(SqStack* s)//ÅÐ¶ÏÕ»ÊÇ·ñÎª¿Õ
 {
-    if (s->top==0)
+    if (s->top == 0)
         return SUCCESS;
 }
 
-Status getTopStack(SqStack *s,ElemType *e) //å¾—åˆ°æ ˆé¡¶å…ƒç´ 
+Status getTopStack(SqStack* s, ElemType* e) //µÃµ½Õ»¶¥ÔªËØ
 {
-    if(s->top==0)
+    if (s->top == -1)
         return ERROR;
-    *e=s->elem[s->top];
+    *e = s->elem[s->top];
     return SUCCESS;
 }
 
-Status clearStack(SqStack *s)//æ¸…ç©ºæ ˆ
+Status clearStack(SqStack* s)//Çå¿ÕÕ»
 {
-    int e;
-	for(int i=s->top;i>0;i--)
-    {
-        popStack(s,&e);
-        printf("%d",e);
-    }
+    if (s->top == -1)
+        return ERROR;
+    s->top = -1;
     return SUCCESS;
+    
+    
 }
 
-Status destroyStack(SqStack *s)//é”€æ¯æ ˆ
+Status destroyStack(SqStack* s)//Ïú»ÙÕ»
 {
     free(s->elem);
     s->top = 0;
     s->size = 0;
-	return SUCCESS;
+    return SUCCESS;
 }
-Status stackLength(SqStack *s,int *length)//æ£€æµ‹æ ˆé•¿åº¦
+Status stackLength(SqStack* s, int* length)//¼ì²âÕ»³¤¶È
 {
-    *length=s->top+1;
+    *length = s->top+1;
     return SUCCESS;
 }
 
 
 
-Status pushStack(SqStack *s,ElemType data)//å…¥æ ˆ
+Status pushStack(SqStack* s, ElemType data)//ÈëÕ»
 {
-    if(s->top==s->size-1)/*åˆ¤æ–­æ ˆæ˜¯å¦å·²æ»¡*/
+    if (s->top == s->size - 1)/*ÅÐ¶ÏÕ»ÊÇ·ñÒÑÂú*/
         return ERROR;
     s->top++;
-    s->elem[s->top]=data;
+    s->elem[s->top] = data;
     return SUCCESS;
 }
-Status popStack(SqStack *s,ElemType *data)//å‡ºæ ˆ
+Status popStack(SqStack* s, ElemType* data)//³öÕ»
 {
-    if(s->top==0)
+    if (s->top == -1)
         return ERROR;
-    *data=s->elem[--s->top];
+    *data = s->elem[s->top];
+    s->top--;
     return SUCCESS;
 }
