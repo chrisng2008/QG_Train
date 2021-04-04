@@ -1,6 +1,3 @@
 # QG_Train
 
-create a branch is quickly
-
-Creating a new branch is quick AND simple.
-
+QG Train in 2021.3.26
