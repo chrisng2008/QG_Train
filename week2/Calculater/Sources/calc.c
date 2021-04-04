@@ -1,50 +1,76 @@
-#include "calc.h"
+/* sqstack.c */
 #include <stdio.h>
+#include <stdlib.h>
 
-sqstack* sqstack_create()/*创建栈*/
-{
-	sqstack *s;
-	s=(sqstack*)malloc(sizeof(*s));
-	s->top=-1;
-	return s;
-}
-Status sqstack_push(sqstack *s, int data) /*入栈*/
-{
-	if(s->top==MAXSIZE-1)/*如果入栈超过栈空间*/
-		return ERROR;
-	s->data[++s->top]=data;
-	return SUCCESS;
+#include "sqstack.h"
 
+/* 创建栈 */
+sqstack* sqstack_create()
+{
+    sqstack* L;
+
+    L = (sqstack*)malloc(sizeof(*L));
+
+    L->top = -1;
+
+    return L;
 }
 
-Status sqstack_pop(sqstack *s, int *e) /*出栈*/
+/* 入栈 */
+int sqstack_push(sqstack* L, int x)
 {
-	if (s->top == -1)
-		return ERROR;
-	*e = s->data[s->top];
-	s->top--;
-	return SUCCESS;
+    //如果入栈超出栈空间
+    if (L->top == MAXSIZE - 1)
+    {
+        return -1;
+    }
+    //压栈
+    L->data[++L->top] = x;
+    return 0;
 }
-Status sqstack_top(sqstack *s, int *e) /*查看栈顶的值*/
+
+/* 出栈 */
+int sqstack_pop(sqstack* L, int* x)
 {
-	if (s->top == -1)
-		return ERROR;
-	*e = s->data[s->top];
-	return SUCCESS;
+    //如果出栈超出栈空间
+    if (L->top == -1)
+    {
+        return -1;
+    }
+    //利用传出参数传出栈顶元素
+    *x = L->data[L->top--];
+    return 0;
 }
-Status sqstack_is_empty(sqstack* s)/*判断栈是否为空*/
+
+/* 获得栈顶值 */
+int sqstack_top(sqstack* L, int* x)
 {
-	if (s->top == 0)
-		return SUCCESS;
+    if (L->top == -1)
+    {
+        return -1;
+    }
+
+    *x = L->data[L->top];
+    return 0;
 }
-Status sqstack_display(sqstack* s)/*显示栈内容,调试时用*/
+/* 判断栈是否为空 */
+int sqstack_is_empty(sqstack* L)
 {
-	if (s->top == -1)
-		return ERROR;
-	for (int i = s->top; i >= 0; i--)
-	{
-		printf("%d  ", s->data[i]);
-		printf("\n");
-	}
-	return SUCCESS;
+    return (L->top == -1);
+}
+
+/* 打印输出栈中元素 */
+void sqstack_display(sqstack* L)
+{
+    int i;
+    if (L->top == -1)
+    {
+        return;
+    }
+
+    for (i = 0; i <= L->top; i++)
+    {
+        printf("%d ", L->data[i]);
+    }
+    printf("\n");
 }
