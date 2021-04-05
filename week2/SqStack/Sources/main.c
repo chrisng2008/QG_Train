@@ -145,9 +145,8 @@ int main()
                 printf("对不起，该栈不存在，出栈前请初始化栈!\n\n");
             }
             break;
-            /*case CLEARSCREEN:
-                if(clearScreen)
-                printf("清空屏幕成功！\n");
+            case CLEARSCREEN:
+                clearScreen();
                 printf("Enter the num the test the function!\n");
                 printf("         Enter 0 to leave\n");
                 printf("###################################\n");
@@ -159,17 +158,13 @@ int main()
                 printf("##     6. 入栈操作               ##\n");
                 printf("##     7. 出栈操作               ##\n");
                 printf("##     8. 清空当前屏幕           ##\n");
-                printf("###################################\n");*/
+                printf("###################################\n");
+                break;
         default:
-            printf("输入错误，请输入0-7之前的整数\n");
+            printf("输入错误，请输入0-8之间的整数\n");
             break;
         }
     } while (n != 0);
-
-
-
-
-
 
     return 0;
 }

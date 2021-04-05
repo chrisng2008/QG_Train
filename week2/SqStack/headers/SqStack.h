@@ -37,4 +37,5 @@ Status destroyStack(SqStack *s);//销毁栈
 Status stackLength(SqStack *s,int *length);//检测栈长度
 Status pushStack(SqStack *s,ElemType data);//入栈
 Status popStack(SqStack *s,ElemType *data);//出栈
+void clearScreen();
 #endif 

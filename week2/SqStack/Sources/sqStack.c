@@ -65,3 +65,8 @@ Status popStack(SqStack* s, ElemType* data)//³öÕ»
     s->top--;
     return SUCCESS;
 }
+
+void clearScreen()
+{
+    system("cls");
+}
