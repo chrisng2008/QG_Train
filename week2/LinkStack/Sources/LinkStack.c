@@ -1,5 +1,9 @@
 #include "LinkStack.h"
 #include<conio.h>
+#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
+#include <stdlib.h>
 
 
 
@@ -104,28 +108,23 @@ Status clearScreen()
 	system("cls");
 }
 
-ElemType read()
+
+int read()
 {
-	int num = 0;
-	int NUM;
-	char c;
-	while (c = _getch())
+	int i;
+	int value;
+	char num[100];
+	do
 	{
-		if (c >= '0' && c <= '9')//只能输入0~9
+		printf("请输入数字\n");
+		scanf_s("%s", num);
+		if (i = strspn(num, "0123456789"))
 		{
-			putchar(c);//getch函数不回显输入的字符
-			num = (num * 10 + (c - '0'));
-			NUM = num;
-		}
-		else if (c == '\r')//换行符结束输入
+			value = atoi(num);
 			break;
-		else
-		{
-			puts("输入非法，重新输入");
-			num = 0;
 		}
-	}
-	//printf("\n输入的数字=%d\n", num);
-	printf("\n");
-	return NUM;
+		else
+			printf("输入错误，");
+	} while (i == 0);
+	return value;
 }

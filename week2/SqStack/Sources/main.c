@@ -20,7 +20,7 @@ int main()
     SqStack* s;
     do
     { 
-        scanf_s("%d", &n);
+        n = read();
         switch (n)
         {
         case 0:
@@ -88,7 +88,7 @@ int main()
             }
             else if (exist == 0)
             {
-                printf("对不起，销毁栈前请初始化栈");
+                printf("对不起，销毁栈前请初始化栈\n\n");
             }
            
                 

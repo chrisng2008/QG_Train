@@ -1,4 +1,8 @@
 #include "SqStack.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 
 Status initStack(SqStack* s, int sizes)//初始化栈
 {
@@ -69,4 +73,23 @@ Status popStack(SqStack* s, ElemType* data)//出栈
 void clearScreen()
 {
     system("cls");
+}
+
+int read()
+{
+	int i;
+	int value;
+	char num[100];
+	do
+	{
+		printf("请输入数字\n");
+		scanf_s("%s", num);
+		if (i = strspn(num, "0123456789"))
+		{
+			value = atoi(num);
+			break;
+		}
+        printf("输入错误,");
+	} while (i == 0);
+	return value;
 }

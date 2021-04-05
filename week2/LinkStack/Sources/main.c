@@ -1,8 +1,9 @@
 #include "LinkStack.h"
 #include <stdio.h>
+
 int main()
 {
-	int i, n;
+	int i, n, j, exist = 0;
 	LinkStackPtr s;
 	printf("Enter the num the test the function!\n");
 	printf("         **输入0结束**\n");
@@ -18,76 +19,115 @@ int main()
 	printf("##     9. 清空当前屏幕           ##\n");
 	printf("###################################\n");
 
-	
 	do
 	{
-		//n = read();
-		//int ret;
-		//ret = scanf_s("%d", &n);
-		//while (ret != 1)
-		//{
-		//	while (getchar() != '\n') //清除缓存区中非法字符，我查到可用fflush(stdin); 代替。
-		//		printf("输入错误！请输入数字0-9\n\n");
-		//	ret = scanf_s("%d", &n);
-		//}
-		scanf_s("%d", &n);
+		n = read();
+		//scanf_s("%d", &n);
 		switch (n)
 		{
 		case 0:
 			break;
 		case INITSTACK:
 		{
-			if (initLStack(&s))
-				printf("初始化链栈成功！\n\n");
+			if (exist == 0)
+			{
+				if (initLStack(&s))
+					printf("初始化链栈成功！\n\n");
+				exist = 1;
+			}
+			else
+			{
+				printf("请初始化栈前销毁栈!\n\n");
+			}
 			break;
 		}
 
 		case ISEMPTY:
 		{
-			if (isEmptyLStack(&s))
-				printf("该链栈为空\n\n");
-			else
-				printf("该链栈不为空\n\n");
+			if (exist == 1)
+			{
+				if (isEmptyLStack(&s))
+					printf("该链栈为空\n\n");
+				else
+					printf("该链栈不为空\n\n");
+			}
+			else if (exist == 0)
+			{
+				printf("对不起，请先初始化栈！");
+			}
+			
 			break;
 		}
 		case GETTOPLSTACK:
 		{
-			ElemType e;
-			if (getTopLStack(&s, &e)){
-				printf("获取栈顶元素成功！\n");
-				printf("当前栈顶元素为%d\n\n", e);
+			if (exist == 1)
+			{
+				ElemType e;
+				if (getTopLStack(&s, &e)) {
+					printf("获取栈顶元素成功！\n");
+					printf("当前栈顶元素为%d\n\n", e);
+				}
+				else
+					printf("获取栈顶元素失败!该链栈为空\n\n");
 			}
-			else
-				printf("获取栈顶元素失败!该链栈为空\n\n");
+			else if (exist == 0)
+			{
+				printf("对不起，获取栈顶元素前，请初始化栈");
+			}
+			
 			break;
 		}
 		case CLEARLSTACK:
 		{
-			if (clearLStack(&s))
-				printf("清空栈成功！\n\n");
-			else
-				printf("清空栈失败！\n\n");
+			if (exist == 1)
+			{
+				if (clearLStack(&s))
+					printf("清空栈成功！\n\n");
+				else
+					printf("清空栈失败！\n\n");
+			}
+			else if (exist==0)
+			{
+				printf("对不起，清空栈前请初始化栈");
+			}
+			
 			break;
 		}
 		case DESTORYLSTACK:
 		{
-			if (destroyLStack(&s))
-				printf("销毁栈成功！\n\n");
-			else
-				printf("销毁栈失败！\n\n");
+			if (exist == 1)
+			{
+				if (destroyLStack(&s))
+					printf("销毁栈成功！\n\n");
+				else
+					printf("销毁栈失败！\n\n");
+				exist = 0;
+			}
+			else if (exist == 0)
+			{
+				printf("对不起，销毁栈前请初始化栈");
+			}
+			
 			break;
 		}
 
 		case LSTACKLENGTH:
 		{
-			int length;
-			if (LStackLength(&s, &length))
+			if (exist == 1)
 			{
-				printf("成功获取链栈的长度\n");
-				printf("链栈的长度为%d\n\n", length);
+				int length;
+				if (LStackLength(&s, &length))
+				{
+					printf("成功获取链栈的长度\n");
+					printf("链栈的长度为%d\n\n", length);
+				}
+				else
+					printf("获取链栈长度失败!\n\n");
 			}
-			else
-				printf("获取链栈长度失败!\n\n");
+			else if (exist == 0)
+			{
+				printf("对不起，获取栈长度前请初始化栈");
+			}
 			break;
 		}
 		case PUSHSTACK:
@@ -137,6 +177,7 @@ int main()
 		}
 	} while (n != 0);
 	return 0;
+	system("pause");
 }
 
 

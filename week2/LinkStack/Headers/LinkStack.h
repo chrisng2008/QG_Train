@@ -46,6 +46,7 @@ Status LStackLength(LinkStack *s,int *length);//检测栈长度
 Status pushLStack(LinkStack *s,ElemType data);//入栈
 Status popLStack(LinkStack *s,ElemType *data);//出栈
 Status clearScreen();
+int read();
 
 
 #endif 
