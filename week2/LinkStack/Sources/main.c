@@ -3,6 +3,7 @@
 int main()
 {
 	int i, n;
+	LinkStackPtr s;
 	printf("Enter the num the test the function!\n");
 	printf("         **输入0结束**\n");
 	printf("###################################\n");
@@ -17,9 +18,18 @@ int main()
 	printf("##     9. 清空当前屏幕           ##\n");
 	printf("###################################\n");
 
-	LinkStackPtr s;
+	
 	do
 	{
+		//n = read();
+		//int ret;
+		//ret = scanf_s("%d", &n);
+		//while (ret != 1)
+		//{
+		//	while (getchar() != '\n') //清除缓存区中非法字符，我查到可用fflush(stdin); 代替。
+		//		printf("输入错误！请输入数字0-9\n\n");
+		//	ret = scanf_s("%d", &n);
+		//}
 		scanf_s("%d", &n);
 		switch (n)
 		{
@@ -104,13 +114,28 @@ int main()
 			}
 			break;
 		}
-		
+		case CLEARSCREEN:
+			clearScreen();
+			printf("Enter the num the test the function!\n");
+			printf("         **输入0结束**\n");
+			printf("###################################\n");
+			printf("##     1. 初始化链栈             ##\n");
+			printf("##     2. 判断链栈是否为空       ##\n");
+			printf("##     3. 获取栈顶元素           ##\n");
+			printf("##     4. 清空栈                 ##\n");
+			printf("##     5. 销毁栈                 ##\n");
+			printf("##     6. 获取栈的长度           ##\n");
+			printf("##     7. 入栈操作               ##\n");
+			printf("##     8. 出栈操作               ##\n");
+			printf("##     9. 清空当前屏幕           ##\n");
+			printf("###################################\n");
+			break;
+
 		default:
-			printf("输入错误！请输入0-8之间的整数");
+			printf("输入错误！请输入0-9之间的整数");
+
 		}
 	} while (n != 0);
-
-
 	return 0;
 }
 

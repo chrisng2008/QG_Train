@@ -1,4 +1,5 @@
 #include "LinkStack.h"
+#include<conio.h>
 
 
 
@@ -96,4 +97,35 @@ Status popLStack(LinkStack* s, ElemType* data)//出栈
 	free(p);
 	s->count--;
 	return SUCCESS;
+}
+
+Status clearScreen()
+{
+	system("cls");
+}
+
+ElemType read()
+{
+	int num = 0;
+	int NUM;
+	char c;
+	while (c = _getch())
+	{
+		if (c >= '0' && c <= '9')//只能输入0~9
+		{
+			putchar(c);//getch函数不回显输入的字符
+			num = (num * 10 + (c - '0'));
+			NUM = num;
+		}
+		else if (c == '\r')//换行符结束输入
+			break;
+		else
+		{
+			puts("输入非法，重新输入");
+			num = 0;
+		}
+	}
+	//printf("\n输入的数字=%d\n", num);
+	printf("\n");
+	return NUM;
 }

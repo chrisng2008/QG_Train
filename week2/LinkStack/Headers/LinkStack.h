@@ -17,6 +17,7 @@ typedef enum function
 	LSTACKLENGTH,
 	PUSHSTACK,
 	POPLSTACK,
+	CLEARSCREEN,
 }function;
 
 typedef int ElemType;
@@ -44,6 +45,7 @@ Status destroyLStack(LinkStack *s);//销毁栈
 Status LStackLength(LinkStack *s,int *length);//检测栈长度
 Status pushLStack(LinkStack *s,ElemType data);//入栈
 Status popLStack(LinkStack *s,ElemType *data);//出栈
+Status clearScreen();
 
 
 #endif 
