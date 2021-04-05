@@ -153,11 +153,12 @@ int main()
                 printf("##     1. 初始化顺序栈            ##\n");
                 printf("##     2. 判断栈是否为空          ##\n");
                 printf("##     3. 获取栈顶元素            ##\n");
-                printf("##     4. 销毁栈                 ##\n");
-                printf("##     5. 获取当前栈的长度        ##\n");
-                printf("##     6. 入栈操作               ##\n");
-                printf("##     7. 出栈操作               ##\n");
-                printf("##     8. 清空当前屏幕           ##\n");
+                printf("##     4. 清空顺序栈              ##\n");
+                printf("##     5. 销毁顺序栈              ##\n");
+                printf("##     6. 获取顺序栈的长度        ##\n");
+                printf("##     7. 入栈操作                ##\n");
+                printf("##     8. 出栈操作                ##\n");
+                printf("##     9. 清空屏幕                ##\n");
                 printf("###################################\n");
                 break;
         default:
@@ -167,4 +168,5 @@ int main()
     } while (n != 0);
 
     return 0;
+    system("pause");
 }
