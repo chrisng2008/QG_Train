@@ -33,15 +33,7 @@ class SimpleLinearRegression():
 
     def _predict(self, x_single):
         return self._a * x_single + self._b
-
-    # 验证拟合度
-    def score(self, x_test, y_test):
-        y_test_mean = np.mean(y_test)
-        x_test_mean = np.mean(x_test)
-        y_predict = self.predict(x_test)
-        num = 0.0
-        d = 0.0
-
+        
 # 预测多元线性回归模型
 class MultipleLinearRegression():
 
@@ -65,22 +57,7 @@ class MultipleLinearRegression():
         x_test = np.hstack([np.ones((len(x_test), 1)), x_test])
         return np.array(x_test.dot(self._theta))
 
-
-# 梯度下降法
-class GradientDescent():
-
-    def __init__(self):
-        self._lr = 0
-        self._intercept = None
-        self._coef = None
-
-    def fit_simple(self, x_train, y_train):
-        assert x_train.ndim == 1, "Simple Gradient Descent can only solve predict feature train training data set"
-        assert len(x_train) == len(y_train), "the size of the x_train must be eaqul to the size of the y_train"
-
         
-
-
 
 
 
