@@ -2,9 +2,9 @@
  *    File Name                :    AQueue.h
  *    CopyRight                :
  *
- *    SYSTEM                    :   Mac OS
+ *    SYSTEM                    :   Windows
  *    Create Data                :    2020.4.2
- *    Author/Corportation        :   Chuan Shi
+ *    Author/Corportation        :   Yongxi Wu
  *
  *
  *--------------------------------Revision History--------------------------------------
@@ -42,6 +42,9 @@ typedef enum
 } Status;
 char type;
 char datatype[MAXQUEUE];
+
+
+
 /**************************************************************
  *    Prototype Declare Section
  **************************************************************/
@@ -158,6 +161,7 @@ Status TraverseAQueue(const AQueue *Q, void (*foo)(void *q));
  */
 void APrint(void *q);	
 
+char* s_gets(char* st, int n);
 /**************************************************************
  *    End-Multi-Include-Prevent Section
  **************************************************************/
