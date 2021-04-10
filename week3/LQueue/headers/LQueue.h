@@ -18,7 +18,11 @@
  **************************************************************/
 #ifndef LQUEUE_H_INCLUDED
 #define LQUEUE_H_INCLUDED
+#define OVERFLOW 0
+typedef unsigned int size_t;
 
+int typeSize;
+char type;
 /**************************************************************
  *    Struct Define Section
  **************************************************************/
@@ -40,8 +44,8 @@ typedef enum
 {
     FALSE=0, TRUE=1
 } Status;
-char type;					
-char datatype[30];			
+char type;
+char datatype[30];
 
 /**************************************************************
  *    Prototype Declare Section
@@ -130,11 +134,11 @@ Status TraverseLQueue(const LQueue *Q, void (*foo)(void *q));
  *  @name        : void LPrint(void *q)
  *    @description : ²Ù×÷º¯Êý
  *    @param         q Ö¸Õëq
- 
+
  *  @notice      : None
  */
 void LPrint(void *q);
-
+int getInt();
 /**************************************************************
  *    End-Multi-Include-Prevent Section
  **************************************************************/
