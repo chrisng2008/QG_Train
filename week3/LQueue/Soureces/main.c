@@ -8,6 +8,7 @@ char* s_gets(char* st, int n);
 void select();
 void Display();
 void setType();
+void setVoid(LQueue* Q);
 int main() 
 {
     setType();
@@ -22,7 +23,9 @@ int main()
 void setType()
 {
     char choose;
-    printf("请选择数据类型：\na.整型\nb.字符型\nc.浮点型\n");
+    puts("********************************************");
+    printf("请选择数据类型：a.整型  b.字符型  c.浮点型 \n");
+    puts("********************************************");
     scanf("%c", &choose);
     switch (choose) {
     case 'a':
@@ -34,9 +37,9 @@ void setType()
     case 'c':
         typeSize = sizeof(double);
         break;
-    //case 'd':
-    //    typeSize= sizeof(char) * 100;
-        
+   /* case 'd':
+        typeSize= sizeof(char) * 100;
+        break;*/
     default:
         printf("请输入正确的指令！\n");
         break;
@@ -118,13 +121,14 @@ void select(LQueue Q)
             }
             printf("%lf", *(double*)d);
         }
-        //if (type == sizeof(char) * 100)
-        //{
-        //    char c[100];
-        //    puts("请输入数据");
-        //    s_gets(d, 100);
-        //    EnAQueue(Q, &c);
-        //}
+       /* if (type == sizeof(char) * 100)
+        {
+            d = (char*)malloc(sizeof(100));
+            while (scanf("%s", (char*)d) != 1) {
+                printf("请输入正确类型\n");
+                while (getchar() != '\n');
+            }
+        }*/
         data = (void*)malloc(sizeof(typeSize));
         memcpy(data, d, typeSize);
         if (EnLQueue(&Q, data))printf("入队成功！\n");
@@ -175,4 +179,14 @@ char* s_gets(char* st, int n)
     }
     return ret_val;
 
+}
+
+
+
+void setVoid(LQueue* Q)
+{
+    char c[100];
+    puts("请输入数据");
+    s_gets(c, 100);
+    EnLQueue(Q, &c);
 }
