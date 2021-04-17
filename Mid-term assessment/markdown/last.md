@@ -60,7 +60,7 @@ train_df.head()
     .dataframe tbody tr th {
         vertical-align: top;
     }
-
+    
     .dataframe thead th {
         text-align: right;
     }
@@ -230,7 +230,7 @@ for col in train_df.columns:
     is_handicapped - 1.0%
     trainee_engagement_rating - 2.0%
     is_pass - 0.0%
-    
+
 
 age缺失了39%
 
@@ -312,7 +312,7 @@ train_df.head()
     .dataframe tbody tr th {
         vertical-align: top;
     }
-
+    
     .dataframe thead th {
         text-align: right;
     }
@@ -636,7 +636,7 @@ train_df.head()
     .dataframe tbody tr th {
         vertical-align: top;
     }
-
+    
     .dataframe thead th {
         text-align: right;
     }
@@ -790,7 +790,7 @@ train_df_corr.corr()
     .dataframe tbody tr th {
         vertical-align: top;
     }
-
+    
     .dataframe thead th {
         text-align: right;
     }
@@ -1046,7 +1046,7 @@ train_df.head()
     .dataframe tbody tr th {
         vertical-align: top;
     }
-
+    
     .dataframe thead th {
         text-align: right;
     }
@@ -1216,7 +1216,7 @@ X
     .dataframe tbody tr th {
         vertical-align: top;
     }
-
+    
     .dataframe thead th {
         text-align: right;
     }
@@ -1790,7 +1790,38 @@ cross_val_score(tree,X,y)
 
 
 ```python
+# from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import RandomizedSearchCV, GridSearchCV
+# rfc = RandomForestClassifier(n_estimators=100, max_depth=3, random_state=2)
+# rfc.fit(X, y)
+# param_distributions
+rs_grid = {'n_estimators': [100, 300, 500, 800, 1000, 1200, 1400],
+           'criterion': ['gini', 'entropy'],
+           'max_features': ['auto', 'log2'],
+           'max_depth': [3, 5, 7, 9, 15, 25, 30],
+           'min_samples_split': [2, 3, 4, 5, 7, 10, 15],
+           'min_samples_leaf': [1, 2, 5, 10, 12, 14]}
 
+# instantiate RF model class for tuning
+rf = RandomForestClassifier(random_state=0)
+
+# randomized search of parameters using 5 fold cross validation, 
+rf_rsearch = RandomizedSearchCV(estimator=rf, 
+                               param_distributions=rs_grid, 
+                               n_iter=200, 
+                               cv=5, 
+                               verbose=3, 
+                               random_state=0, 
+                               n_jobs=-1)
+rf_rsearch.fit(X_train, y_train)
+
+# rf_rsearch.best_params_
+# {'n_estimators': 100,
+#  'min_samples_split': 3,
+#  'min_samples_leaf': 10,
+#  'max_features': 'log2',
+#  'max_depth': 25,
+#  'criterion': 'entropy'}
 ```
 
 
