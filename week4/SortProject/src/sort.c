@@ -2,7 +2,7 @@
 #include "sort.h"
 #include <stdlib.h>
 #include <time.h>
-
+#include "Stack.h"
 /**
  *  @name        : void insertSort(int *a,int n);
  *  @description : 插入排序算法
@@ -11,13 +11,16 @@
 void insertSort(int *a,int n)
 {
     int i,j,key;
-        for (i=1;i<n;i++){
-                key = *(a+i);
-                j=i-1;
-                for(j=i-1;j>=0&&*(a+j)>key;j--)
-                    a[j+1] = a[j];
-                a[j+1] = key;
+    for (i=1;i<n;i++)
+    {
+        key = *(a+i);
+        j=i-1;
+        for(j=i-1;j>=0 && *(a+j)>key;j--)
+        {
+            a[j+1] = a[j];
         }
+        a[j+1] = key;
+    }
 }
 
 
@@ -88,10 +91,37 @@ void QuickSort_Recursion(int *a, int begin, int end)
  *  @description : 快速排序（非递归版）
  *  @param       : 数组指针a，数组长度size
  */
+
 void QuickSort(int *a,int size)
 {
+    int left=0,right=size-1;
+    Stack st;
+	StackInit(&st);
+	StackPush(&st, right);
+	StackPush(&st, left);
+	while (StackEmpty(&st) != 0)
+	{
+		int begin = StackTop(&st);
+		StackPop(&st);
+		int end = StackTop(&st);
+		StackPop(&st);
+		int div = Partition(a, begin, end);
+		//[div+1,end]
+		if (div + 1 <end)//在此区间有元素就进栈
+		{
+			StackPush(&st, end);
+			StackPush(&st, div+1);
+		}
+		//[begin,div-1]
 
+		if (begin < div - 1)//在此区间有元素就进栈
+		{
+			StackPush(&st,div-1);
+			StackPush(&st, begin);
+		}
+	}
 }
+
 
 
 /**
@@ -128,6 +158,8 @@ int Partition(int *a, int begin, int end)
  */
 void CountSort(int *a, int size , int max)
 {
+
+/*
     int *p =(int*)malloc(sizeof(int)*size);
     int *q = (int*)malloc(sizeof(int)*(max+1));
     for (int i = 0; i < max; ++i)
@@ -163,9 +195,27 @@ void CountSort(int *a, int size , int max)
     //不要忘了释放分配的空间
     free(p);
     free(q);
-    }
-
-
+    */
+    int *c, *b;
+    int i;
+    c = (int *)malloc(sizeof(int)*max);
+    b = (int *)malloc(sizeof(int)*size);
+    for(i=0;i<max;i++)
+        c[i]=0;
+    for(i=0;i<size;i++)
+        c[a[i]] += 1;
+    for(i=1;i<max;i++)
+        c[i]=c[i-1]+c[i];
+    for (i=size-1;i>=0;i--)
+        {
+            b[ c [a [i] ] -1 ] = a[i];
+            c[ a[i]] -= 1;
+        }
+    for (i=0;i<size;i++)
+        a[i]=b[i];
+    free(c);
+    free(b);
+}
 /**
  *  @name        : void RadixCountSort(int *a,int size)
  *  @description : 基数计数排序
@@ -251,25 +301,29 @@ int GetNumTop(int *a,int k,int size)
     int *c= (int*)malloc(sizeof(int)*size);
     for (int i=0;i<size;i++)
         c[i]=a[i];
-    QuickSort(c,size);
+    //QuickSort(c,size);
     int max=c[size-k];
     return max;
 }
 
 /**
- *  @name        : void getRandArray(int array[], int size)
- *  @description : 返回一个大小为size的随机数整型数组
+ *  @name        : void MakeRand(int arr[], int count)
+ *  @description : 使数组乱序
  *  @param       : 数组的大小size,array
  */
-void getRandArray(int array[], int size)
+void MakeRand(int arr[], int size)
 {
-    int i;
-    srand((unsigned int) time(NULL));
-    for (i = 0; i < size; i++)
+	srand((unsigned int)time(NULL)); //随机数种子;
+	for (int i = 0; i<size - 1; i++)
 	{
-		array[i] = rand()%100 + 1;
+		int num = i + rand() % (size - 1 - i); // 取随机数
+		int temp = arr[i];
+		arr[i] = arr[num];
+		arr[num] = temp; //交换
 	}
 }
+
+
 
 void getcolorArray(int array[], int size)
 {
@@ -284,9 +338,73 @@ void getcolorArray(int array[], int size)
 
 void Display(int array[],int size)
 {
-	int i;
+	int i,j;
 	printf("\n");
-	for (i=0;i<size;i++)
-		printf("%d  ",array[i]);
+    for(i=0; i<size/10; i++)
+    {
+        for(j=0; j<10; j++)
+        {
+            printf("%-5d",array[i*10+j]);
+        }
+        printf("\n");
+    }
     printf("\n");
 }
+
+void swap(int a, int b)
+{
+    int temp;
+    temp=a;
+    a=b;
+    b=temp;
+}
+
+
+/*生成随机数列写到文件*/
+int WriteArray(int size)
+{
+    int i,j;
+    FILE *pf = NULL;
+    int* arr = (int*)malloc(sizeof(int)*size);
+    srand((unsigned)time(NULL));//随机种子
+    pf = fopen("sort.txt","a");
+    //生成数列
+    for(i=0; i<size; i++)
+    {
+        arr[i] = rand()%1000;
+    }
+    //格式化输出到文件中
+    for(i=0; i<size/10; i++)
+    {
+        for(j=0; j<10; j++)
+        {
+            fprintf(pf,"%-5d",arr[i*10+j]);
+        }
+        fprintf(pf,"\n");
+    }
+    fclose(pf);
+    return 0;
+}
+//读取生成数列
+void ReadArray(int size,int* arr)
+{
+    int i,j;
+    FILE *pf;
+    if((pf = fopen("sort.txt","r"))==NULL)
+    {
+        printf("Error\n");
+        system("PAUSE");
+        exit(1);
+    }
+    //读取文件内容到数列
+    for(i=0; i<size/10; i++)
+    {
+        for(j=0; j<10; j++)
+        {
+            fscanf(pf,"%d",&arr[i*10+j]);
+        }
+        fscanf(pf,"\n");
+    }
+    fclose(pf);
+}
+

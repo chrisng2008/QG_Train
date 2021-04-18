@@ -89,12 +89,6 @@ int GetNumTop(int* a, int k,int size);
 int GetNumInPos(int num, int pos);
 
 
-/**
- *  @name        : int* RandomArray(int size)
- *  @description : 返回一个大小为size的随机数整型数组
- *  @param       : 数组的大小size
- */
-void getRandArray(int array[], int size);
 
 /**
  *  @name        : void Display(int* array)
@@ -103,4 +97,8 @@ void getRandArray(int array[], int size);
  */
 void Display(int* array,int size);
 void getcolorArray(int array[], int size);
+void MakeRand(int arr[], int size);
+void swap(int a, int b);
+int WriteArray(int size);
+void ReadArray(int size,int* arr);
 #endif // QUEUE_H_INCLUDED
