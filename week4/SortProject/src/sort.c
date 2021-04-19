@@ -192,6 +192,7 @@ void CountSort(int *a, int size , int max)
 
 void RadixCountSort(int *a,int size)
 {
+	//计算最大循环次数，也就是最大位数
     int maxtime = getMax(a,size);
     int* array[10];
     for (int i = 0; i < 10; i++)
@@ -202,6 +203,7 @@ void RadixCountSort(int *a,int size)
 
      for (int k = 1; k <= maxtime; k++)
     {
+    	//第k位的排序
         for (int i = 0; i < size; i++)
         {
             int num=a[i];
@@ -214,6 +216,7 @@ void RadixCountSort(int *a,int size)
             array[num][index] = a[i];
             array[num][0]++;//计数器长度增加
         }
+        //复位
         int j=0;//size
         for (int i = 0; i < 10; i++)
         {
