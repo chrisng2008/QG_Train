@@ -5,7 +5,6 @@
 #include <ctype.h>
 #include "sort.h"
 #include <time.h>
-#define _CRT_SECURE_NO_WARNINGS
 #include <io.h>
 int size;
 int getInt();
@@ -16,7 +15,8 @@ char* s_gets(char* st, int n);
 void RandonArray(int array[],int size);
 typedef long clock_t;
 int isRandom = 1;
-int read();
+
+
 
 
 int main()
@@ -70,14 +70,15 @@ void menu()
     puts("##  1.插入排序        ##");
     puts("##  2.归并排序        ##");
     puts("##  3.快速排序(递归)  ##");
-    //puts("##  4.快速排序(非递归)##");
+    puts("##  4.快速排序(非递归)##");
     puts("##  5.计数排序        ##");
     puts("##  6.基数排序        ##");
     puts("##  7.颜色排序        ##");
     puts("##  8.找第k大的数     ##");
     puts("##  9.遍历打印数组    ##");
-    puts("##  10.数组乱序       ##");
-    puts("##  11.清空屏幕       ##");
+    puts("##  10.排序时常排行   ##");
+    puts("##  11.数组乱序       ##");
+    puts("##  12.清空屏幕       ##");
     puts("########################");
     printf("\n");
 }
@@ -102,7 +103,7 @@ void select(int *array,int *temp,int size)
                     isRandom = 0;
                 }
                 else
-                    puts("请排序前输入10使数组乱序");
+                    puts("请排序前输入11使数组乱序");
                 break;
 
             }
@@ -120,7 +121,7 @@ void select(int *array,int *temp,int size)
                     isRandom = 0;
                 }
                 else
-                    puts("请排序前输入10使数组乱序");
+                    puts("请排序前输入11使数组乱序");
                 break;
             }
 
@@ -139,13 +140,13 @@ void select(int *array,int *temp,int size)
 
                 }
                 else
-                    puts("请排序前输入10使数组乱序");
+                    puts("请排序前输入11使数组乱序");
                 break;
             }
 
         case 4:
 
-            //QuickSort(array,size);
+            QuickSort(array,size);
             puts("快速排序非递归完成，请按9查看排序后的数组");
             break;
         case 5:
@@ -163,7 +164,7 @@ void select(int *array,int *temp,int size)
                     isRandom = 0;
             }
             else
-                puts("请排序前输入10使数组乱序");
+                puts("请排序前输入11使数组乱序");
             break;
 
         }
@@ -181,7 +182,7 @@ void select(int *array,int *temp,int size)
                     isRandom = 0;
                 }
                 else
-                    puts("请排序前输入10使数组乱序");
+                    puts("请排序前输入11使数组乱序");
                 break;
             }
 
@@ -203,7 +204,7 @@ void select(int *array,int *temp,int size)
                     free(colorarray);
             }
             else
-                puts("请排序前输入10使数组乱序");
+                puts("请排序前输入11使数组乱序");
             break;
         case 8:
             puts("请输入你需要找的第几大的数：");
@@ -217,11 +218,14 @@ void select(int *array,int *temp,int size)
             puts("遍历打印数组完成，输入11清空屏幕");
             break;
         case 10:
+            rank(array,size);
+            break;
+        case 11:
             MakeRand(array, size);
             puts("数组乱序成功！");
             isRandom = 1;
             break;
-        case 11:
+        case 12:
             system("cls");
             menu();
             break;
@@ -237,18 +241,22 @@ void select(int *array,int *temp,int size)
 
 int getInt()
 {
-    char in[11];
-    int t;
-
-    s_gets(in, 11);
-    t = atoi(in);
-    if (t == 0) {
-        if (in[1] != 0 || in[2] != '\0')
+    int i;
+    int value;
+    char num[100];
+    do
+    {
+        printf("请输入数字\n");
+        scanf_s("%s", num);
+        if (i = strspn(num, "0123456789"))
         {
-            t = getInt();
+            value = atoi(num);
+            break;
         }
-    }
-    return t;
+        else
+            printf("输入错误，");
+    } while (i == 0);
+    return value;
 }
 
 char* s_gets(char* st, int n)
@@ -277,3 +285,79 @@ int setSize()
     size = getInt();
     return size;
 }
+
+int rank(int *array,int size)
+{
+    int i;
+    int *copy = (int*)malloc(sizeof(int)*size);
+
+    clock_t start,end;
+    start = clock();
+    for(i=0;i<size;i++)
+        copy[i]=array[i];
+    insertSort(copy,size);
+    end = clock();
+    double insert_time = (double)(end - start) / CLK_TCK;
+    sortNode  timeRank[6];
+    timeRank[0].time = insert_time;
+    strcpy(timeRank[0].s, "insertSort");
+
+
+    start = clock();
+    for(i=0;i<size;i++)
+        copy[i]=array[i];
+    int *temp = (int *)calloc(size, sizeof(int));
+    MergeSort(copy,0,size-1,temp);
+    end = clock();
+    double MergeSort_time = (double)(end - start) / CLK_TCK;
+    timeRank[1].time = MergeSort_time;
+    strcpy(timeRank[1].s, "MergeSort");
+
+
+    start = clock();
+    for(i=0;i<size;i++)
+        copy[i]=array[i];
+    QuickSort_Recursion(copy,0,size-1);
+    end = clock();
+    double QuickSort_Recursion_time = (double)(end - start) / CLK_TCK;
+    timeRank[2].time = QuickSort_Recursion_time;
+    strcpy(timeRank[2].s, "QuickSort_Recursion");
+
+
+    start = clock();
+    QuickSort(copy,size);
+    end = clock();
+    for(i=0;i<size;i++)
+        copy[i]=array[i];
+    double QuickSort_time = (double)(end - start) / CLK_TCK;
+    timeRank[3].time = QuickSort_time;
+    strcpy(timeRank[3].s, "QuickSort");
+
+
+    start = clock();
+    for(i=0;i<size;i++)
+        copy[i]=array[i];
+    int max=GetKTop(array,1,size); //获取最大的数;
+    CountSort(copy,size,max);
+    end = clock();
+    double CountSort_time = (double)(end - start) / CLK_TCK;
+    timeRank[4].time = CountSort_time;
+    strcpy(timeRank[4].s, "CountSort");
+
+
+    start = clock();
+    for(i=0;i<size;i++)
+        copy[i]=array[i];
+    RadixCountSort(copy,size);
+    end = clock();
+    double RadixCountSort_time = (double)(end - start) / CLK_TCK;
+    timeRank[5].time = RadixCountSort_time;
+    strcpy(timeRank[5].s, "RadixCountSort");
+
+    insertSort_double(timeRank,6);
+    for (i=0;i<6;i++) {
+        printf("排行为：%d.%s  %f ms\n", i + 1, timeRank[i].s, timeRank[i].time);
+    }
+    free(copy);
+}
+

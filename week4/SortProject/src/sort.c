@@ -2,6 +2,7 @@
 #include "sort.h"
 #include <stdlib.h>
 #include <time.h>
+#include "Stack.h"
 #include <io.h>
 
 /**
@@ -9,6 +10,9 @@
  *  @description : 插入排序算法
  *  @param       : 数组指针 a, 数组长度 n
  */
+
+
+
 void insertSort(int *a,int n)
 {
     int key,i,j;
@@ -23,6 +27,23 @@ void insertSort(int *a,int n)
         a[j+1]=key;
     }
 }
+
+void insertSort_double(sortNode *rank,int n)
+{
+    int i,j;
+    double key;
+    for(i=1;i<n;i++)
+    {
+        key = rank[i].time;
+        j=i-1;//每一次都从i前面的数开始比较
+        for(j=i-1;rank[j].time>key&&j>=0;j--)
+        {
+            rank[j+1].time=rank[j].time;//在遇到比key小的数前，数组部分后移，得出一个空位，最后填补
+        }
+        rank[j+1].time=key;
+    }
+}
+
 /**
  *  @name        : void MergeArray(int *a,int begin,int mid,int end,int *temp);
  *  @description : 归并排序（合并数组）
@@ -109,7 +130,7 @@ void QuickSort_Recursion(int *a, int begin, int end)
  *  @description : 快速排序（非递归版）
  *  @param       : 数组指针a，数组长度size
  */
-/*
+
 void QuickSort(int *a,int size)
 {
    int begin,end;//设置头尾两端点，确保成对压入栈
@@ -120,10 +141,29 @@ void QuickSort(int *a,int size)
    initLStack(&s);//初始化栈
    pushLStack(&s,end);
    pushLStack(&s,begin);
+   int key;
+   while(isEmptyLStack(&s)!=1)//只要栈不为空，循环继续
+   {
+       //首先出栈计算
+       popLStack(&s,&begin);//后进先出
+       popLStack(&s,&end);
 
+       key = Partition(a,begin,end);//对栈顶进行排序
 
+       if(key+1<end)
+       {
+           pushLStack(&s,end);
+           pushLStack(&s,key+1);
+       }
+       //对两边分别入栈
+       if(begin<key-1)
+       {
+           pushLStack(&s,key-1);
+           pushLStack(&s,begin);
+       }
+   }
 
-}*/
+}
 
 /**
  *  @name        : void QuickSort(int *a, int begin, int end)
@@ -192,7 +232,6 @@ void CountSort(int *a, int size , int max)
 
 void RadixCountSort(int *a,int size)
 {
-	//计算最大循环次数，也就是最大位数
     int maxtime = getMax(a,size);
     int* array[10];
     for (int i = 0; i < 10; i++)
@@ -203,7 +242,6 @@ void RadixCountSort(int *a,int size)
 
      for (int k = 1; k <= maxtime; k++)
     {
-    	//第k位的排序
         for (int i = 0; i < size; i++)
         {
             int num=a[i];
@@ -216,7 +254,6 @@ void RadixCountSort(int *a,int size)
             array[num][index] = a[i];
             array[num][0]++;//计数器长度增加
         }
-        //复位
         int j=0;//size
         for (int i = 0; i < 10; i++)
         {

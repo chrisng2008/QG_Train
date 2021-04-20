@@ -1,13 +1,21 @@
 #define _CRT_SECURE_NO_WARNINGS
 #ifndef SORT_H_INCLUDED
 #define SORT_H_INCLUDED
+
+
+typedef struct sortNode
+{
+    char s[30];
+    double time;
+}sortNode;
+
 /**
  *  @name        : void insertSort(int *a,int n);
  *  @description : 插入排序算法
  *  @param       : 数组指针 a, 数组长度 n
  */
 void insertSort(int *a,int n);
-
+void insertSort_double(sortNode *rank,int n);
 
 /**
  *  @name        : void MergeArray(int *a,int begin,int mid,int end,int *temp);
@@ -88,23 +96,11 @@ int GetKTop(int *a,int k,int size);
  *  @description : 遍历整个数组
  *  @param       : array数组的地址
  */
-void Display(int* array,int size);//打印数组
-
-
-void getcolorArray(int array[], int size);//生成适用于颜色排序的数组
-
-
-void MakeRand(int arr[], int size);//数组乱序
-
-
-void swap(int *a, int *b);//交换元素
-
-
-int getMax(int *a,int size);//获取最大位数
-
-
-void WriteArray(int size);//写入本地数组
-
-
-int GetArray(int* arr);//读取本地数组
+void Display(int* array,int size);
+void getcolorArray(int array[], int size);
+void MakeRand(int arr[], int size);
+void swap(int *a, int *b);
+int getMax(int *a,int size);
+void WriteArray(int size);
+int GetArray(int* arr);
 #endif // QUEUE_H_INCLUDED
