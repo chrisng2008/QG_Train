@@ -15,6 +15,9 @@ char* s_gets(char* st, int n);
 void RandonArray(int array[],int size);
 typedef long clock_t;
 int isRandom = 1;
+int rank(int *array,int size);
+
+
 
 
 
@@ -145,9 +148,18 @@ void select(int *array,int *temp,int size)
             }
 
         case 4:
-
-            QuickSort(array,size);
-            puts("快速排序非递归完成，请按9查看排序后的数组");
+            if(isRandom==1)
+            {
+                clock_t start,end;
+                start = clock();
+                QuickSort(array,size);
+                end = clock();
+                double QuickSort_time = (double)(end - start) / CLOCKS_PER_SEC;
+                puts("快速排序非递归完成，请按9查看排序后的数组");
+                printf("所消耗的时间为 %f secs\n",QuickSort_time);
+            }
+            else
+                puts("请排序前输入11使数组乱序");
             break;
         case 5:
         {
@@ -215,7 +227,7 @@ void select(int *array,int *temp,int size)
             break;
         case 9:
             Display(array,size);
-            puts("遍历打印数组完成，输入11清空屏幕");
+            puts("遍历打印数组完成，输入12清空屏幕");
             break;
         case 10:
             rank(array,size);
