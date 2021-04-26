@@ -18,9 +18,12 @@ char* s_gets(char* st, int n);
 
 int main()
 {
+    if(BST_init(&T))
+        puts("初始化二叉树成功！");
     menu();
     select(T);
-
+    return 0;
+    system("pause");
 }
 
 void select(BinarySortTree T)
@@ -31,13 +34,6 @@ void select(BinarySortTree T)
             exit(0);
             break;
         case 1:
-        {
-            //初始化二叉树
-            if(BST_init(&T))
-                puts("初始化二叉树成功！");
-            break;
-        }
-        case 2:
         {
             ElemType data;
             puts("请输入要查找的数字：");
@@ -50,7 +46,7 @@ void select(BinarySortTree T)
         }
 
 
-        case 3:
+        case 2:
         {
             //插入数字
             puts("请输入你要插入的数字");
@@ -60,14 +56,10 @@ void select(BinarySortTree T)
                 puts("插入数字成功");
             else
                 puts("插入数字失败");
-//            printf("%d",T.root->value);
-//            if(T.root->left!=NULL)
-//                printf("%d",T.root->left->value);
-//            if(T.root->right!=NULL)
-//                printf("%d",T.root->right->value);
+
             break;
         }
-        case 4:
+        case 3:
         {
             //删除数字
             ElemType m;
@@ -79,7 +71,7 @@ void select(BinarySortTree T)
                 puts("删除数字失败");
             break;
         }
-        case 5:
+        case 4:
         {
             //递归前序遍历
             if(BST_preorderR(&T,print))
@@ -90,7 +82,7 @@ void select(BinarySortTree T)
                 printf("\n递归前序遍历失败！\n");
             break;
         }
-        case 6:
+        case 5:
         {
             if(BST_inorderR(&T,print))
                 puts("递归中序遍历成功！");
@@ -99,7 +91,7 @@ void select(BinarySortTree T)
             //递归中序遍历
             break;
         }
-        case 7:
+        case 6:
         {
             //递归后序遍历
             if(BST_postorderR(&T,print))
@@ -108,7 +100,7 @@ void select(BinarySortTree T)
                 puts("递归后序遍历失败！");
             break;
         }
-        case 8:
+        case 7:
         {
             //非递归前序遍历
             if(BST_preorderI(&T,print))
@@ -117,7 +109,7 @@ void select(BinarySortTree T)
                 puts("非递归前序遍历失败");
             break;
         }
-        case 9:
+        case 8:
         {
             //非递归中序遍历
             if(BST_inorderI(&T,print))
@@ -126,7 +118,7 @@ void select(BinarySortTree T)
                 puts("非递归中序遍历失败！");
             break;
         }
-        case 10:
+        case 9:
         {
             //非递归后序遍历
             if(BST_postorderI(&T,print))
@@ -135,7 +127,7 @@ void select(BinarySortTree T)
                 puts("非递归后序遍历失败！");
             break;
         }
-        case 11:
+        case 10:
         {
             //层序遍历
             if(BST_levelOrder(&T,print))
@@ -144,7 +136,7 @@ void select(BinarySortTree T)
                 puts("层次遍历失败！");
             break;
         }
-        case 12:
+        case 11:
         {
             //清空屏幕
             system("cls");//清空屏幕
@@ -166,18 +158,17 @@ void menu()
     puts("欢迎来到排序二叉树测试系统");
     puts("########################");
     puts("##  0.退出程序        ##");
-    puts("##  1.初始化二叉树    ##");
-    puts("##  2.查找数字        ##");
-    puts("##  3.插入数字        ##");
-    puts("##  4.删除数字        ##");
-    puts("##  5.递归前序遍历    ##");
-    puts("##  6.递归中序遍历    ##");
-    puts("##  7.递归后序遍历    ##");
-    puts("##  8.非递归前序遍历  ##");
-    puts("##  9.非递归中序遍历  ##");
-    puts("##  10.非递归后序遍历  ##");
-    puts("##  11.层序遍历      ##");
-    puts("##  12.清空屏幕       ##");
+    puts("##  1.查找数字        ##");
+    puts("##  2.插入数字        ##");
+    puts("##  3.删除数字        ##");
+    puts("##  4.递归前序遍历    ##");
+    puts("##  5.递归中序遍历    ##");
+    puts("##  6.递归后序遍历    ##");
+    puts("##  7.非递归前序遍历  ##");
+    puts("##  8.非递归中序遍历  ##");
+    puts("##  9.非递归后序遍历  ##");
+    puts("##  10.层序遍历      ##");
+    puts("##  11.清空屏幕       ##");
     puts("########################");
     printf("\n");
 }

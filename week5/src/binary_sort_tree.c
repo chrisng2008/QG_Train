@@ -94,74 +94,180 @@ Status BST_insert(BinarySortTreePtr T, ElemType data)
  */
 Status BST_delete(BinarySortTreePtr T, ElemType data)
 {
+
     NodePtr p = (*T).root;
+    NodePtr pre = p;
+    NodePtr s;
     if(p==NULL)
         return false;
-    else{
-        //如果遍历后面都没有则结束
-        if(data == p->value)
-            return Delete(p);
-        else if(data < p->value)
-            DeleteBST(p->left,data);
+    if(BST_search(T,data)==false)
+        return false;
+    if(data==p->value&&p->left!=NULL)
+    {
+        s = p->left;
+        while(s->right)
+        {
+            s = s->right;
+        }
+        if(s->left!=NULL)
+        {
+            pre = s;
+            s = s->left;
+            ElemType temp;
+            temp = p->value;
+            p->value=pre->value;
+            pre->value=temp;
+            free(pre);
+        }
+        else{
+            ElemType temp;
+            temp = p->value;
+            p->value=s->value;
+            s->value=temp;
+            free(s);
+        }
+    }
+    else if(data<p->value)
+        p=p->left;
+    else if(data>p->value)
+        p=p->right;
+    else if(data==p->value)
+    {
+        if(p->left!=NULL&&p->right==NULL)
+        {
+            s = p;
+            p=p->left;
+            free(s);
+        }
+        else if(p->left==NULL&&p->right!=NULL)
+        {
+            s = p;
+            p=p->right;
+            free(s);
+        }
+            //末尾
+        else if(pre->right->value==data&&p->left==NULL&&p->right==NULL)
+        {
+            Delete(p);
+            pre->right=NULL;
+        }
+        else if(pre->left->value==data&&p->left==NULL&&p->right==NULL)
+        {
+            Delete(p);
+            pre->left=NULL;
+        }
+        else if(p->left!=NULL&&p->right!=NULL) {
+            s = p->left;
+            while (s->right) {
+                s = s->right;
+            }
+            if (s->left != NULL) {
+                pre = s;
+                s = s->left;
+                ElemType temp;
+                temp = p->value;
+                p->value = pre->value;
+                pre->value = temp;
+                free(pre);
+            } else {
+                ElemType temp;
+                temp = p->value;
+                p->value = s->value;
+                s->value = temp;
+                free(s);
+            }
+        }
+    }
+    while(p->value!=data)
+    {
+        if(data<p->value)
+        {
+            pre = p;
+            p = p->left;
+        }
         else if(data > p->value)
-            DeleteBST(p->right,data);
+        {
+            pre = p;
+            p = p->right;
+        }
+    }
+    if(p->left!=NULL&&p->right==NULL)
+    {
+        s = p;
+        p=p->left;
+        free(s);
+    }
+    else if(p->left==NULL&&p->right!=NULL)
+    {
+        s = p;
+        p=p->right;
+        free(s);
+    }
+    //末尾
+    else if(pre->right->value==data&&p->left==NULL&&p->right==NULL)
+    {
+        Delete(p);
+        pre->right=NULL;
+    }
+    else if(pre->left->value==data&&p->left==NULL&&p->right==NULL)
+    {
+        Delete(p);
+        pre->left=NULL;
+    }
+    else if(p->left!=NULL&&p->right!=NULL) {
+        s = p->left;
+        while (s->right) {
+            s = s->right;
+        }
+        if (s->left != NULL) {
+            pre = s;
+            s = s->left;
+            ElemType temp;
+            temp = p->value;
+            p->value = pre->value;
+            pre->value = temp;
+            free(pre);
+        } else {
+            ElemType temp;
+            temp = p->value;
+            p->value = s->value;
+            s->value = temp;
+            free(s);
+        }
     }
     return succeed;
-}
-void DeleteBST(NodePtr T,ElemType data)
-{
-    if(T==NULL)
-        return;
-    else
-    {
-        if(data==T->value)
-            Delete(T);
-        else if(data<T->value)
-            DeleteBST(T->left,data);
-        else
-            DeleteBST(T->right,data);
-    }
 }
 
 Status Delete(NodePtr p)
 {
-    if(p==NULL)
-        return false;
-    NodePtr  q;
-    //只有叶子结点
-    if(p->left==NULL&&p->right==NULL)
+    NodePtr q,s;
+    if(p->right==NULL&&p->left==NULL)
         free(p);
-    //只有左孩子或者只有右孩子
-    else if(p->right==NULL&&p->left!=NULL)
+    else if(p->right==NULL)
     {
-        q = p;
-        p = p->left;
+        q=p;
+        p=p->left;
         free(q);
     }
-    else if(p->right!=NULL&&p->left==NULL)
+    else if(p->left==NULL)
     {
-        q = p;
-        p = p->right;
+        q=p;
+        p=p->right;
         free(q);
-    }
-    /*左右子树均不为空,与左孩子最右结点交换*/
-    else
-    {
-        //找左孩子最有结点
-        q = p;
-        NodePtr temp;
-        temp = p ->left;
-        while(temp->right)
+    } else{
+        q=p;
+        s=p->left;
+        while(s->right)
         {
-            q = temp;
-            temp = temp->right;
+            q=s;
+            s=s->right;
         }
-        p->value = temp ->value;
+        p->value=s->value;
         if(q!=p)
-            q->right=temp->left;
+            q->right=s->left;
         else
-            q->left = temp->left;
-        free(temp);
+            q->left=s->right;
+        free(s);
     }
     return succeed;
 }
@@ -287,6 +393,7 @@ void PreOrderTraverse(NodePtr T,void (*visit)(NodePtr))
          popLStack(&s,temp);
          visit(temp);
          p = temp->right;
+         //都要移动，如果为NULL是判断下次是否移动的关键
      }
      return succeed;
  }
