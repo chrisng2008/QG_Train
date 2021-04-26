@@ -99,15 +99,12 @@ Status BST_delete(BinarySortTreePtr T, ElemType data)
         return false;
     else{
         //如果遍历后面都没有则结束
-        while(!p->value)
-        {
-            if(data == p->value)
-                return Delete(p);
-            else if(data < p->value)
-                DeleteBST(p->left,data);
-            else if(data > p->value)
-                DeleteBST(p->right,data);
-        }
+        if(data == p->value)
+            return Delete(p);
+        else if(data < p->value)
+            DeleteBST(p->left,data);
+        else if(data > p->value)
+            DeleteBST(p->right,data);
     }
     return succeed;
 }
@@ -151,15 +148,20 @@ Status Delete(NodePtr p)
     else
     {
         //找左孩子最有结点
-        q = p->left;
-        while(q->right)
-            q = q->right;
-        //两结点进行交换
-        ElemType temp;
-        temp = q->value;
-        p ->value = q ->value;
-        q ->value = temp;
-        free(q);
+        q = p;
+        NodePtr temp;
+        temp = p ->left;
+        while(temp->right)
+        {
+            q = temp;
+            temp = temp->right;
+        }
+        p->value = temp ->value;
+        if(q!=p)
+            q->right=temp->left;
+        else
+            q->left = temp->left;
+        free(temp);
     }
     return succeed;
 }
@@ -243,6 +245,7 @@ Status BST_preorderR(BinarySortTreePtr T, void (*visit)(NodePtr))
     visit(p);
     PreOrderTraverse(p->left,visit);
     PreOrderTraverse(p->right,visit);
+
     return succeed;
 }
 
@@ -262,32 +265,31 @@ void PreOrderTraverse(NodePtr T,void (*visit)(NodePtr))
  * @return is successful
  */
  //将所有的左孩子入栈，输出栈顶，压栈顶的右孩子入栈
-Status BST_inorderI(BinarySortTreePtr T, void (*visit)(NodePtr))
-{
+ Status BST_inorderI(BinarySortTreePtr T, void (*visit)(NodePtr))
+ {
 
-    if (T->root == NULL)
-    {
-        return false;
-    }
-    NodePtr p= T->root;
-    NodePtr temp;
-    temp = (NodePtr)malloc(sizeof(Node));
-    LinkStack s;
-    initLStack(&s);
-    while (p != NULL || !isEmptyLStack(&s))
-    {
-        while (p)
-        {
-            pushLStack(&s,p);
-            p=p->left;
-        }
-        //此时出了循环走到了最左叶子节点
-        popLStack(&s,temp);
-        visit(temp);
-        p = temp->right;
-    }
-    return succeed;
-}
+     if (T->root == NULL)
+     {
+         return false;
+     }
+     NodePtr p= T->root;
+     NodePtr temp;
+     temp = (NodePtr)malloc(sizeof(Node));
+     LinkStack s;
+     initLStack(&s);
+     while (p != NULL || !isEmptyLStack(&s))
+     {
+         while (p)
+         {
+             pushLStack(&s,p);
+             p=p->left;
+         }
+         popLStack(&s,temp);
+         visit(temp);
+         p = temp->right;
+     }
+     return succeed;
+ }
 
 
 /**
@@ -323,7 +325,8 @@ void InOrderTraverse(NodePtr T, void (*visit)(NodePtr))
  */
 //无递归的后序遍历 需要用栈
 //为了方便，我们将栈修改为泛型栈
-//我们需要一个辅助的二叉树来判断到底该结点的左右孩子有没有输出
+//实际上观察后序遍历来说，后序遍历其实就是前序遍历先遍历右子树再左子树，最后再逆序。结果其实时一样的。
+//考虑到最后要逆序，我们需要另外一个栈，用来逆序
 Status BST_postorderI(BinarySortTreePtr T, void (*visit)(NodePtr))
 {
     if(T->root==NULL)
