@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1383</width>
+    <height>858</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>图书推荐系统</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="3" column="3">
+     <layout class="QVBoxLayout" name="verticalLayout_3">
+      <item>
+       <widget class="QPushButton" name="search_button">
+        <property name="text">
+         <string>书籍搜索</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="rec_button">
+        <property name="text">
+         <string>书籍推荐</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="add_book">
+        <property name="text">
+         <string>添加书籍</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="person_button">
+        <property name="text">
+         <string>个人中心</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="fresh_button">
+        <property name="text">
+         <string>刷新列表</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="3" column="0">
+     <widget class="QTableWidget" name="tableWidget">
+      <property name="maximumSize">
+       <size>
+        <width>620</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="editTriggers">
+       <set>QAbstractItemView::NoEditTriggers</set>
+      </property>
+      <column>
+       <property name="text">
+        <string>书籍名称</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>作者</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>我的评分</string>
+       </property>
+      </column>
+     </widget>
+    </item>
+    <item row="3" column="2">
+     <widget class="QTableWidget" name="tableWidget_2">
+      <column>
+       <property name="text">
+        <string>书籍名称</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>作者</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>评价人数</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>平均评分</string>
+       </property>
+      </column>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0" colspan="2">
+     <widget class="QLabel" name="label_2">
+      <property name="text">
+       <string>我的书籍</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="2">
+     <widget class="QLabel" name="label_3">
+      <property name="text">
+       <string>热门书籍</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_4">
+      <property name="font">
+       <font>
+        <family>Adobe 黑体 Std R</family>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>账户名称：</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1383</width>
+     <height>26</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="action">
+   <property name="text">
+    <string>退出</string>
+   </property>
+  </action>
+  <action name="action_2">
+   <property name="text">
+    <string>账户管理</string>
+   </property>
+  </action>
+  <action name="action_4">
+   <property name="text">
+    <string>注册</string>
+   </property>
+  </action>
+  <action name="action_5">
+   <property name="text">
+    <string>登陆</string>
+   </property>
+  </action>
+  <action name="action_6">
+   <property name="text">
+    <string>修改账号</string>
+   </property>
+  </action>
+  <action name="action_7">
+   <property name="text">
+    <string>修改密码</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
